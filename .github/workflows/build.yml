@@ -1,4 +1,6 @@
-name: Build Android App
+name: Build APK and AAB with Gradle
+run: ./gradlew assembleDebug bundleDebug
+      
 
 on:
   push:
