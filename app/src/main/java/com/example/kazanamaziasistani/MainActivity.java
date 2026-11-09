@@ -36,7 +36,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Base64;
 
@@ -53,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
         
         
 
-        
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            getWindow().getAttributes().layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
 
         
 
@@ -168,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                             "xhr.send();" +
                         "})();";
                         myWebView.evaluateJavascript(js, null);
-                        Toast.makeText(getApplicationContext(), "Yedek indiriliyor...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Yedek hazırlanıyor...", Toast.LENGTH_SHORT).show();
                     } else {
                         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                         request.allowScanningByMediaScanner();
@@ -176,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                         DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                         dm.enqueue(request);
-                        Toast.makeText(getApplicationContext(), "Yedek İndirilenler klasörüne kaydediliyor...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Yedek İndirilenler klasörüne indiriliyor...", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -246,10 +248,10 @@ public class MainActivity extends AppCompatActivity {
                 ContentResolver resolver = mContext.getContentResolver();
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.MediaColumns.DISPLAY_NAME, dosyaAdi);
-                values.put(MediaStore.MediaColumns.MIME_TYPE, "application/octet-stream");
+                values.put(MediaStore.MediaColumns.MIME_TYPE, "application/json");
                 values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
 
-                Uri uri = resolver.insert(MediaStore.Files.getContentUri("external"), values);
+                Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
                 if (uri != null) {
                     try (OutputStream os = resolver.openOutputStream(uri)) {
                         if (os != null) {
@@ -257,9 +259,21 @@ public class MainActivity extends AppCompatActivity {
                             os.flush();
                         }
                     }
+                    mContext.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(mContext, "Yedek başarıyla İndirilenler'e kaydedildi!", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                mContext.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(mContext, "Kayıt hatası: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         }
     }
