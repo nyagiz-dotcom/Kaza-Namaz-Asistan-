@@ -38,8 +38,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) { getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES; }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            getWindow().getAttributes().layoutInDisplayCutoutMode = 
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+        }
+
         
 
         rootLayout = new RelativeLayout(this);
@@ -118,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(MainActivity.this, "Yedek başarıyla İndirilenler klasörüne kaydedildi!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Yedek dosyası İndirilenler klasörüne kaydedildi!", Toast.LENGTH_LONG).show();
                             }
                         });
                     }
