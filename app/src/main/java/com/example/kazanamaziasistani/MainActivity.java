@@ -97,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             
         });
 
-        // İndirme ve Yedekleme Köprüsü
         myWebView.addJavascriptInterface(new Object() {
             @JavascriptInterface
             public void downloadJson(String fileName, String jsonContent) {
