@@ -1,21 +1,40 @@
 name: Build Android App
+
 on: [push, workflow_dispatch]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
+
     - name: Set up JDK 17
       uses: actions/setup-java@v5
       with:
         distribution: 'temurin'
         java-version: '17'
-    - uses: gradle/actions/setup-gradle@v3
-    - run: gradle assembleDebug bundleDebug
-    - run: |
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: Build APK and AAB
+      run: gradle assembleDebug bundleDebug
+
+    - name: Rename Output Files
+      run: |
         mv app/build/outputs/apk/debug/app-debug.apk app/build/outputs/apk/debug/KAZA_NAMAZI_AS_STANI_debug.apk
         mv app/build/outputs/bundle/debug/app-debug.aab app/build/outputs/bundle/debug/KAZA_NAMAZI_AS_STANI_debug.aab
-    - uses: actions/upload-artifact@v4
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
       with:
         name: KAZA_NAMAZI_AS_STANI-apk
         path: app/build/outputs/apk/debug/KAZA_NAMAZI_AS_STANI_debug.apk
+
+    - name: Upload AAB
+      uses: actions/upload-artifact@v4
+      with:
+        name: KAZA_NAMAZI_AS_STANI-aab
+        path: app/build/outputs/bundle/debug/KAZA_NAMAZI_AS_STANI_debug.aab
