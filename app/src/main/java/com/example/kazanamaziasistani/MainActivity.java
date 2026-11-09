@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private WebView myWebView;
     private RelativeLayout rootLayout;
     private LinearLayout splashScreenLayout;
+    private ValueCallback<Uri[]> mUploadMessage;
+    private final static int FILE_CHOOSER_RESULT_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,10 +53,7 @@ public class MainActivity extends AppCompatActivity {
         
         
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            getWindow().getAttributes().layoutInDisplayCutoutMode =
-                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
-        }
+        
 
         
 
@@ -98,9 +97,50 @@ public class MainActivity extends AppCompatActivity {
             
         });
 
+        final ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        progressBar.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 10));
+        progressBar.setMax(100);
+        progressBar.setVisibility(View.GONE);
         
-        
-        
+        myWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (false) {
+                    if (newProgress == 100) {
+                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        if (progressBar.getVisibility() == View.GONE) {
+                            progressBar.setVisibility(View.VISIBLE);
+                        }
+                        progressBar.setProgress(newProgress);
+                    }
+                }
+                super.onProgressChanged(view, newProgress);
+            }
+
+            @Override
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> filePathCallback, FileChooserParams fileChooserParams) {
+                if (mUploadMessage != null) {
+                    mUploadMessage.onReceiveValue(null);
+                }
+                mUploadMessage = filePathCallback;
+
+                Intent contentIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                contentIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentIntent.setType("*/*");
+
+                Intent chooserIntent = Intent.createChooser(contentIntent, "Dosya Seç");
+                try {
+                    startActivityForResult(chooserIntent, FILE_CHOOSER_RESULT_CODE);
+                } catch (Exception e) {
+                    mUploadMessage = null;
+                    return false;
+                }
+                return true;
+            }
+
+            
+        });
 
         myWebView.setDownloadListener(new DownloadListener() {
             @Override
@@ -128,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                             "xhr.send();" +
                         "})();";
                         myWebView.evaluateJavascript(js, null);
-                        Toast.makeText(getApplicationContext(), "İndirme başlatıldı...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Yedek indiriliyor...", Toast.LENGTH_SHORT).show();
                     } else {
                         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                         request.allowScanningByMediaScanner();
@@ -136,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
                         DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                         dm.enqueue(request);
-                        Toast.makeText(getApplicationContext(), "Dosya İndirilenler klasörüne indiriliyor...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Yedek İndirilenler klasörüne kaydediliyor...", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -149,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
         myWebView.loadUrl("file:///android_asset/index.html");
 
         rootLayout.addView(myWebView);
-        
+        rootLayout.addView(progressBar);
 
         
 
@@ -159,6 +199,23 @@ public class MainActivity extends AppCompatActivity {
             WindowInsetsController controller = getWindow().getInsetsController();
             controller.hide(WindowInsets.Type.systemBars());
             controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        if (requestCode == FILE_CHOOSER_RESULT_CODE) {
+            if (mUploadMessage == null) return;
+            Uri[] results = null;
+            if (resultCode == Activity.RESULT_OK && intent != null) {
+                String dataString = intent.getDataString();
+                if (dataString != null) {
+                    results = new Uri[]{Uri.parse(dataString)};
+                }
+            }
+            mUploadMessage.onReceiveValue(results);
+            mUploadMessage = null;
         }
     }
 
