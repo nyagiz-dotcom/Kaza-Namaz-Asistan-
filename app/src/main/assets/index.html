@@ -1775,6 +1775,7 @@
                     try {
                         const parsed = JSON.parse(event.target.result);
                         if (parsed.data) countsPerVakit = parsed.data;
+                        secureSaveItem('kaza_namazi_data', JSON.stringify(countsPerVakit));
                         if (parsed.userTotalTargetVakit !== undefined) {
                             userTotalTargetVakit = parsed.userTotalTargetVakit;
                             secureSaveItem('kaza_user_total_target_vakit', String(userTotalTargetVakit));
