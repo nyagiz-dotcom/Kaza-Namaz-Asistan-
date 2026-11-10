@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         ws.setSupportZoom(false);
         ws.setMediaPlaybackRequiresUserGesture(false);
         myWebView.setWebViewClient(new WebViewClient());
+        webView.addJavascriptInterface(this, "AndroidBridge");
         myWebView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimeType, long contentLength) {
