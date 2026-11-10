@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.Theme_AppCompat_NoActionBar);
         super.onCreate(savedInstanceState);
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
