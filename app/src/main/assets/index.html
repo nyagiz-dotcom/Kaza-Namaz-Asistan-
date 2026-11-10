@@ -55,7 +55,22 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
-</head>
+<script>
+                            window.addEventListener('offline', () => {
+                                let banner = document.getElementById('offline-banner');
+                                if (!banner) {
+                                    banner = document.createElement('div');
+                                    banner.id = 'offline-banner';
+                                    banner.style.cssText = 'position:fixed;top:0;left:0;width:100%;background:#ef4444;color:#fff;text-align:center;padding:10px;font-family:sans-serif;font-size:12px;z-index:999999;font-weight:bold;';
+                                    banner.innerText = 'İnternet bağlantısı yok! Çevrimdışı moddasınız.';
+                                    document.body.prepend(banner);
+                                }
+                            });
+                            window.addEventListener('online', () => {
+                                const banner = document.getElementById('offline-banner');
+                                if (banner) banner.remove();
+                            });
+                        </script></head>
 <body class="bg-slate-900 text-slate-100 p-0.5">
 
     <!-- Hızlı Yüklenme Ekranı -->
