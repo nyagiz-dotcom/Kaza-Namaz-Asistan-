@@ -103,28 +103,23 @@ public class MainActivity extends AppCompatActivity {
             @JavascriptInterface
             public void downloadJson(String fileName, String jsonContent) {
                 try {
-                    ContentResolver resolver = getContentResolver();
-                    ContentValues values = new ContentValues();
-                    values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
-                    values.put(MediaStore.MediaColumns.MIME_TYPE, "application/json");
-                    values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
-                    Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
-                    if (uri != null) {
-                        try (OutputStream os = resolver.openOutputStream(uri)) {
-                            if (os != null) {
-                                os.write(jsonContent.getBytes("UTF-8"));
-                                os.flush();
-                            }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                        ContentResolver resolver = getContentResolver();
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
+                        values.put(MediaStore.MediaColumns.MIME_TYPE, "application/json");
+                        values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+                        Uri uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
+                        if (uri != null) {
+                            try (OutputStream os = resolver.openOutputStream(uri)) {
+                                if (os != null) { os.write(jsonContent.getBytes("UTF-8")); os.flush(); }
                         }
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(MainActivity.this, "Yedek İndirilenler klasörüne kaydedildi!", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                    } else {
+                        java.io.File f = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
+                        java.io.FileWriter w = new java.io.FileWriter(f);
+                        w.write(jsonContent); w.close();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    runOnUiThread(() -> Toast.makeText(MainActivity.this, "Yedek kaydedildi: " + fileName, Toast.LENGTH_LONG).show());
                 }
             }
         }, "AndroidBridge");
