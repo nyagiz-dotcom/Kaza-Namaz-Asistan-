@@ -1755,6 +1755,7 @@
                 }, null, 2);
 
                 const fileName = `kaza_namazi_yedek_${new Date().toISOString().slice(0, 10)}.json`;
+                if (window.AndroidBridge && window.AndroidBridge.downloadJson) { window.AndroidBridge.downloadJson(fileName, backupData); return; }
                 const blob = new Blob([backupData], { type: "application/json" });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
