@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
                             try (OutputStream os = resolver.openOutputStream(uri)) {
                                 if (os != null) { os.write(jsonContent.getBytes("UTF-8")); os.flush(); }
                         }
-                           } 
+                    }
                     } else {
                         java.io.File f = new java.io.File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName);
                         java.io.FileWriter w = new java.io.FileWriter(f);
