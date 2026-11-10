@@ -120,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                         w.write(jsonContent); w.close();
                     }
                     runOnUiThread(() -> Toast.makeText(MainActivity.this, "Yedek kaydedildi: " + fileName, Toast.LENGTH_LONG).show());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }, "AndroidBridge");
