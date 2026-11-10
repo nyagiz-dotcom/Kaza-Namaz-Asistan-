@@ -1,4 +1,4 @@
-name: Build Android App (APK & AAB)
+name: Build Android App (APK & AAB & SHA)
 on: [push, workflow_dispatch]
 jobs:
   build:
@@ -15,7 +15,10 @@ jobs:
         mkdir -p output_artifacts
         cp app/build/outputs/apk/debug/app-debug.apk output_artifacts/KAZA_NAMAZI_AS_STANI_debug.apk
         cp app/build/outputs/bundle/debug/app-debug.aab output_artifacts/KAZA_NAMAZI_AS_STANI_debug.aab
+        cd output_artifacts
+        sha256sum KAZA_NAMAZI_AS_STANI_debug.apk KAZA_NAMAZI_AS_STANI_debug.aab > checksums.txt
+        cat checksums.txt
     - uses: actions/upload-artifact@v4
       with:
-        name: KAZA_NAMAZI_AS_STANI-apk-and-aab
+        name: KAZA_NAMAZI_AS_STANI-apk-aab-and-sha
         path: output_artifacts/
