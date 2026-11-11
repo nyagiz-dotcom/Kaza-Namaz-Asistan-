@@ -54,6 +54,17 @@
 					  font-size: 1rem !important;
 					    padding: 0.6rem 0.9rem !important;
 						}
+	/* EKRANA SIĞDIRMA - Taşmayı bitir */
+	* { box-sizing: border-box !important; max-width: 100% !important; }
+	body { overflow-x: hidden !important; margin: 0 auto !important; max-width: 480px !important; padding: 0.5rem !important; }
+	body h1, header h1 { font-size: 1.1rem !important; }
+	#timer, .timer, .countdown { font-size: 1.8rem !important; }
+	button, .btn { font-size: 0.9rem !important; padding: 0.5rem 0.6rem !important; min-height: 40px !important; min-width: 0 !important; white-space: normal !important; }
+	.grid, [class*="grid-cols"] { grid-template-columns: 1fr 1fr !important; gap: 0.5rem !important; }
+	.flex { flex-wrap: wrap !important; }
+	/* Üst yeşil başlık alanını geri getir */
+	header, .header, [class*="bg-green"] { background: #16a34a !important; color: #fff !important; border-radius: 1rem !important; }
+	header *, .header * { color: #fff !important; }
 	/* Ayar / Bilgi gibi küçük ikon butonları */
 	button:has(i), .icon-btn {
 	  font-size: 1.3rem !important;
