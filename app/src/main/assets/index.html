@@ -10,12 +10,17 @@
     <title>Kaza Namazı Takip Asistanı</title>
     
     <!-- Harici CDN Kaynakları -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=JetBrains+Mono:wght@800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        * { box-sizing: border-box; }
+	/* OFFLINE YEDEK - Tailwind yokken bozulmasın diye */
+	.flex{display:flex !important}
+	.flex-col{flex-direction:column !important}
+	.items-center{align-items:center !important}
+	.justify-center{justify-content:center !important}
+	.justify-between{justify-content:space-between !important}
+	.w-full{width:100% !important}
+	.text-center{text-align:center !important}
+	.hidden{display:none !important}
+	        * { box-sizing: border-box; }
         html, body {
             margin: 0; padding: 0;
             background-color: #0f172a; color: #f8fafc;
