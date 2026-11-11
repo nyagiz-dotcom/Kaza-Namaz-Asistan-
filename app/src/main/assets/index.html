@@ -18,7 +18,6 @@
 	
 	/* Üst haplar */
 	header{display:flex;justify-content:space-between;align-items:center;gap:8px}
-	header span, header div{font-size:12px!important}
 	
 	/* Kartlar - hepsi */
 	.bg-slate-800,.bg-slate-900{background:#1e293b!important;border:1px solid #334155!important;border-radius:16px!important;padding:12px!important}
@@ -38,11 +37,7 @@
 	/* Seçili vakit - Sabah gibi */
 	button.bg-amber-500,button.bg-orange-500{background:#f59e0b!important;color:#000!important;border-color:#f59e0b!important}
 	
-	/* + ARTIR mor */
-	button:has(+ *){}
-	
-	/* En alttaki büyük yeşil buton */
-	button:last-of-type{background:linear-gradient(90deg,#22c55e,#16a34a)!important;color:#fff!important;border:none!important;font-size:16px!important;padding:16px!important}
+	.page-container > button:last-child{background:linear-gradient(90deg,#22c55e,#16a34a)!important;color:#fff!important;border:none!important}
 	</style>
 	<script>
                             window.addEventListener('offline', () => {
