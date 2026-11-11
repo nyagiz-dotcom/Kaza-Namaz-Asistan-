@@ -11,6 +11,42 @@
     
     <!-- Harici CDN Kaynakları -->
     <style>
+	/* ANA DÜZELTME - Renkleri ve ortalamayı zorla */
+	* { box-sizing: border-box !important; }
+	html, body {
+	  margin: 0 !important;
+	    padding: 0 !important;
+		  width: 100% !important;
+		    overflow-x: hidden !important;
+			  background: #f3f4f6 !important;
+			    color: #111827 !important;
+				  font-family: sans-serif !important;
+				  }
+				  body > div, main, .container, .max-w-md, .max-w-lg, .mx-auto {
+				    margin-left: auto !important;
+					  margin-right: auto !important;
+					    max-width: 480px !important;
+						  width: 100% !important;
+						    background: #f3f4f6 !important;
+							}
+							.card, .bg-white, .rounded-2xl, .rounded-xl {
+							  background: #ffffff !important;
+							    color: #111827 !important;
+								  border-radius: 1rem !important;
+								    padding: 1rem !important;
+									  margin: 0.5rem !important;
+									    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+										}
+										#offline-banner, .offline, [id*="offline"], [class*="offline"] {
+										  position: fixed !important;
+										    top: 0 !important; left: 0 !important; right: 0 !important;
+											  width: 100% !important;
+											    text-align: center !important;
+												  background: #f59e0b !important;
+												    color: #fff !important;
+													  padding: 8px !important;
+													    z-index: 9999 !important;
+														}
 	/* OFFLINE YEDEK - Tailwind yokken bozulmasın diye */
 	.flex{display:flex !important}
 	.flex-col{flex-direction:column !important}
