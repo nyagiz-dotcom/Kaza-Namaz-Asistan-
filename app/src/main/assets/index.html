@@ -13,14 +13,17 @@
     <style>
 	*{box-sizing:border-box}
 	html,body{margin:0;padding:0;background:#0f172a;color:#f1f5f9;font-family:sans-serif}
+	.hidden{display:none!important}
 	.page-container{max-width:430px;margin:0 auto;padding:10px;display:flex;flex-direction:column;gap:10px}
-	header{display:flex;justify-content:space-between;align-items:center}
-	header h1{font-size:22px!important;line-height:1.1!important;margin:0}
-	.page-container > div{background:#1e293b!important;border:1px solid #334155!important;border-radius:16px!important;padding:12px!important}
-	button{border-radius:12px;padding:12px 8px;font-weight:700;background:#1e293b;color:#fff;border:1px solid #334155}
-	button.bg-amber-500,button.bg-orange-500{background:#f59e0b!important;color:#000!important}
-	select{background:#0f172a!important;color:#fff!important;border:1px solid #334155!important;border-radius:10px!important;padding:10px 6px!important;width:100%!important}
-	#decrementBtn{background:linear-gradient(90deg,#22c55e,#16a34a)!important;color:#fff!important;border:none!important;font-size:16px!important;width:100%!important;padding:16px!important}
+		.flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.w-full{width:100%}
+		.grid{display:grid}.grid-cols-2{grid-template-columns:1fr 1fr}.grid-cols-3{grid-template-columns:1fr 1fr 1fr}.gap-1{gap:4px}.gap-2{gap:8px}
+		header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+		header h1{font-size:22px!important;line-height:1.1!important;margin:0}
+		.bg-slate-800,.bg-slate-900{background:#1e293b!important;border:1px solid #334155!important;border-radius:16px!important;padding:12px!important}
+		button{border-radius:12px;padding:12px 8px;font-weight:700;background:#1e293b;color:#fff;border:1px solid #334155}
+		button.bg-amber-500,button.bg-orange-500{background:#f59e0b!important;color:#000!important}
+		select{background:#0f172a!important;color:#fff!important;border:1px solid #334155!important;border-radius:10px!important;padding:10px 6px!important;width:100%!important;min-width:0!important}
+		#decrementBtn{background:linear-gradient(90deg,#22c55e,#16a34a)!important;color:#fff!important;border:none!important;font-size:16px!important;width:100%!important;padding:16px!important}
 	</style>
 	<script>
                             window.addEventListener('offline', () => {
