@@ -1,5 +1,8 @@
 name: Build Android App (APK & AAB & SHA)
 on: [push, workflow_dispatch]
+concurrency:
+  group: build
+  cancel-in-progress: true
 jobs:
   build:
     runs-on: ubuntu-latest
