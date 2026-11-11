@@ -64,6 +64,13 @@
 	.grid-cols-3 { grid-template-columns: 1fr 1fr 1fr !important; }
 	.flex-1 { flex: 1 !important; }
 	.w-1\/2 { width: 50% !important; }
+	/* BAŞLIK VE BUTON DÜZELTME */
+	h1, .text-4xl, .text-5xl, .text-3xl {
+	  font-size: 1.4rem !important;
+	    line-height: 1.3 !important;
+		  text-align: center !important;
+		  }
+		  h2, .text-2xl { font-size: 1.15rem !important; }
 	/* OFFLINE YEDEK - Tailwind yokken bozulmasın diye */
 	.flex{display:flex !important}
 	.flex-col{flex-direction:column !important}
@@ -2089,6 +2096,21 @@ document.querySelectorAll('i[class*="fa-"]').forEach(function(el){
   el.textContent = emoji;
   el.style.fontStyle='normal';
   el.style.fontFamily='sans-serif';
+});
+</script>
+<script>
+// BUTONLARI YAZISINA GÖRE RENKLENDİR
+document.querySelectorAll('button').forEach(function(b){
+  let t = b.textContent.trim();
+  if(t.includes('Başla')){ b.style.background='#16a34a'; b.style.color='#fff'; }
+  if(t.includes('Kıldım')){ b.style.background='#2563eb'; b.style.color='#fff'; }
+  if(t.includes('Sabah')||t.includes('Öğle')||t.includes('İkindi')||t.includes('Akşam')||t.includes('Yatsı')||t.includes('Vitir')){
+    b.style.border='1px solid #d1d5db';
+    b.style.background='#ffffff';
+    b.style.color='#111827';
+    b.style.padding='0.6rem';
+    b.style.borderRadius='0.75rem';
+  }
 });
 </script>
 </body>
